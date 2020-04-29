@@ -1,0 +1,9 @@
+Going to start building the flask application with basic blog-style functionality. 
+--
+'flask run' in terminal looks for app.py
+change with:
+export FLASK_APP=gamerscreenshots.py
+--
+export FLASK_DEBUG=1
+enables debug mode, changes reload automatically without having to reboot flask server.
+--
