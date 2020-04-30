@@ -1,37 +1,49 @@
+from datetime import datetime
 from flask import Flask, render_template, url_for, flash, redirect
-import sqlite3
+from flask_sqlalchemy import SQLAlchemy
 import os.path
 from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
-
 # generated key in python via secrets.token_hex(16)
 # secret key serves as protection against modifying cookies and such
 app.config['SECRET_KEY'] = '34b1d628cc7a4a647d3900624aa2bf91'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+db = SQLAlchemy(app)
 
-#dummy data, used in home route and pulling from the db
-posts = []
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-db_path = os.path.join(BASE_DIR, "gamerscreenshots.db")
-conn = sqlite3.connect(db_path)
-c = conn.cursor()
-c.execute('SELECT * FROM posts')
-results = c.fetchall()
-for entry in results:
-    posts.append({
-        'Author': entry[0],
-        'Title': entry[1],
-        'Comments': entry[2],
-        'Date': entry[3],
-        'Link': entry[4]
-    })
-conn.close()
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    password = db.Column(db.String(60), nullable=False)
+    posts = db.relationship('Post', backref='author', lazy=True)
+
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    comments = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    link = db.Column(db.Text, nullable=False, default='static/richLUL.png')
+
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.date_posted}')"
 
 #home route
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', posts=posts)
+    posts = []
+    users = {}
+    for post in Post.query.all():
+        posts.append(post)
+    for user in User.query.all():
+        users[user.id] = user.username
+    return render_template('home.html', posts=posts, users=users)
 
 #about route
 @app.route("/about")
