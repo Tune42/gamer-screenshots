@@ -1,21 +1,22 @@
 from flask import Flask, render_template, url_for
+import sqlite3
 app = Flask(__name__)
 
-#dummy data, used in home route
-posts = [
-    {
-        'author': 'Tune42',
-        'title': 'First Post',
-        'content': 'First post content',
-        'date_posted': 'April 29, 2020'
-    },
-    {
-        'author': 'adb9210',
-        'title': 'Second Post',
-        'content': 'Second post content',
-        'date_posted': 'April 29, 2020'
-    }
-]
+#dummy data, used in home route and pulling from the db
+posts = []
+conn = sqlite3.connect('gamerscreenshots.db')
+c = conn.cursor()
+c.execute('SELECT * FROM posts')
+results = c.fetchall()
+for entry in results:
+    posts.append({
+        'Author': entry[0],
+        'Title': entry[1],
+        'Comments': entry[2],
+        'Date': entry[3],
+        'Link': entry[4]
+    })
+conn.close()
 
 #root page
 @app.route("/")

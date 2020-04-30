@@ -3,13 +3,14 @@
 {% block content %}
     {%for post in posts%}  
         <article class="media content-section">
+            <a href="{{ post.Link }}"><img class="mr-3" src="{{ post.Link }}" alt="Screenshot Thumbnail"></a>
             <div class="media-body">
                 <div class="article-metadata">
-                    <a class="mr-2" href="#">{{ post.author }}</a>
-                    <small class="text-muted">{{ post.date_posted }}</small>
+                    <a class="mr-2" href="#">{{ post.Author }}</a>
+                    <small class="text-muted">{{ post.Date }}</small>
                 </div>
-                <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-                <p class="article-content"><img src="static/richLUL.png"></p>
+                <h2><a class="article-title" href="#">{{ post.Title }}</a></h2>
+                <p class="article-content">{{ post.Comments }}</p>
             </div>
         </article>
     {% endfor %}
