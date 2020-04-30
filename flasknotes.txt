@@ -5,3 +5,4 @@ export FLASK_APP=gamerscreenshots.py
 export FLASK_DEBUG=1
 enables debug mode, changes reload automatically without having to reboot flask server.
 --
+wtforms - flask extension - examples in forms.py

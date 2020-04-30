@@ -1,8 +1,13 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, flash, redirect
 import sqlite3
 import os.path
+from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
+
+# generated key in python via secrets.token_hex(16)
+# secret key serves as protection against modifying cookies and such
+app.config['SECRET_KEY'] = '34b1d628cc7a4a647d3900624aa2bf91'
 
 #dummy data, used in home route and pulling from the db
 posts = []
@@ -32,6 +37,28 @@ def home():
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
+
+#registration route
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        # success, below, is the bootstrap class banner
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect(url_for('home'))
+    return render_template('register.html', title='Register', form=form)
+
+#login route
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data == 'test@gmail.com' and form.password.data == 'password':
+            flash('You have been logged in!', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash('Login Unsuccessful. Please check username and password', 'danger')
+    return render_template('login.html', title='Login', form=form)
 
 # runs server in debug mode if this app is ran in python
 # instead of having to use 'flask run' command in terminal.

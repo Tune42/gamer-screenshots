@@ -41,13 +41,13 @@ body {
     text-decoration: none;
   }
   
-  .article-content {
+  /* .article-content {
     white-space: pre-line;
-  }
+  } */
   
   .article-img {
-    height: 65px;
-    width: 65px;
+    height: 120px;
+    width: 120px;
     margin-right: 16px;
   }
   
@@ -62,11 +62,11 @@ body {
     text-decoration: none;
   }
   
-  .article-svg {
+  /* .article-svg {
     width: 25px;
     height: 25px;
     vertical-align: middle;
-  }
+  } */
   
   .account-img {
     height: 125px;
@@ -77,4 +77,9 @@ body {
   
   .account-heading {
     font-size: 2.5rem;
+  }
+
+  .content-section .list-group li:hover{
+    background-color: grey;
+    color: white;
   }
