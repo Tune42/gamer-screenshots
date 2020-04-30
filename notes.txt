@@ -7,5 +7,3 @@ export FLASK_APP=gamerscreenshots.py
 export FLASK_DEBUG=1
 enables debug mode, changes reload automatically without having to reboot flask server.
 --
-Database host address:GamerScreenshots.mysql.pythonanywhere-services.com
-Username:GamerScreenshots

@@ -1,10 +1,13 @@
 from flask import Flask, render_template, url_for
 import sqlite3
+import os.path
 app = Flask(__name__)
 
 #dummy data, used in home route and pulling from the db
 posts = []
-conn = sqlite3.connect('gamerscreenshots.db')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "gamerscreenshots.db")
+conn = sqlite3.connect(db_path)
 c = conn.cursor()
 c.execute('SELECT * FROM posts')
 results = c.fetchall()
