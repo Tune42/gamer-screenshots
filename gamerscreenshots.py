@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for
 import sqlite3
 import os.path
+
 app = Flask(__name__)
 
 #dummy data, used in home route and pulling from the db
@@ -21,13 +22,13 @@ for entry in results:
     })
 conn.close()
 
-#root page
+#home route
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template('home.html', posts=posts)
 
-#about page
+#about route
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
