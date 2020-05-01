@@ -3,15 +3,25 @@
 {% block content %}
     {%for post in posts%}  
         <article class="media content-section">
-            <a href="{{ post.link }}"><img class="mr-3 article-img" src="{{ post.link }}" alt="Screenshot Thumbnail"></a>
+            <a class="align-self-top mr-3" href="{{ users[post.user_id][1] }}"><img src="{{ users[post.user_id][1] }}" alt="Profile Picture"></a>
             <div class="media-body">
                 <div class="article-metadata">
-                    <a class="mr-2" href="#">{{ users[post.user_id] }}</a>
+                    <a class="mr-2" href="#">{{ users[post.user_id][0] }}</a>
                     <small class="text-muted">{{ post.date_posted }}</small>
                 </div>
                 <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-                <p class="article-content">{{ post.comments }}</p>
+                <div class="article-content">
+                    <p>{{ post.comments }}</p>
+                    {% if 'imgur.com' in post.link %}
+                        {% set pic = post.link.split('imgur.com/')[-1].split('.')[0] %}
+                        <blockquote class="imgur-embed-pub" lang="en" data-id="{{ pic }}"><a href="{{ post.link }}"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+                    {% else %}
+                        <a href="{{ post.link }}"><img class="article-img" src="{{ post.link }}" alt="Gamer Screenshot"></a>
+                    {% endif %}
+                </div>
             </div>
         </article>
     {% endfor %}
 {% endblock content %}
+
+<blockquote class="imgur-embed-pub" lang="en" data-id="uNJgaLN"><a href="//imgur.com/uNJgaLN"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>

@@ -9,7 +9,7 @@ body {
   }
   
   .bg-steel {
-    background-color: #5f788a;
+    background-color: #4c8050;
   }
   
   .site-header .navbar-nav .nav-link {
@@ -46,8 +46,8 @@ body {
   } */
   
   .article-img {
-    height: 120px;
-    width: 120px;
+    max-width: 100%;
+    max-height: 100%;
     margin-right: 16px;
   }
   
