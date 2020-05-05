@@ -4,7 +4,7 @@ import os
 from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
 from gamerscreenshots import app, db, bcrypt
-from gamerscreenshots.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from gamerscreenshots.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from gamerscreenshots.models import User, Post
 
 
@@ -89,3 +89,15 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     return render_template('account.html', title='Account', form=form)
+
+@app.route("/post/new", methods=["GET", "POST"])
+@login_required
+def new_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, comments=form.comments.data, author=current_user, link=form.link.data)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post has been created!', 'success')
+        return redirect(url_for('home'))
+    return render_template('create_post.html', title='New Post', form=form)

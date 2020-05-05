@@ -13,8 +13,13 @@
                 <div class="article-content">
                     <p>{{ post.comments }}</p>
                     {% if 'imgur.com' in post.link %}
-                        {% set pic = post.link.split('imgur.com/')[-1].split('.')[0] %}
-                        <blockquote class="imgur-embed-pub" lang="en" data-id="{{ pic }}"><a href="{{ post.link }}"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+                        {% if 'gallery' in post.link %}
+                            {% set pic = post.link.split('imgur.com/gallery/')[1] %}
+                            <blockquote class="imgur-embed-pub" lang="en" data-id="{{ pic }}"><a href="{{ post.link }}"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+                        {% else %}
+                            {% set pic = post.link.split('imgur.com/')[-1].split('.')[0] %}
+                            <blockquote class="imgur-embed-pub" lang="en" data-id="{{ pic }}"><a href="{{ post.link }}"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+                        {% endif %}
                     {% else %}
                         <a href="{{ post.link }}"><img class="article-img" src="{{ post.link }}" alt="Gamer Screenshot"></a>
                     {% endif %}
