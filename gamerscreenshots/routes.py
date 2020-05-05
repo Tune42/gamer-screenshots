@@ -29,7 +29,7 @@ def register():
     form = RegistrationForm()  
     if form.validate_on_submit():
         # uft-8 gets the data as a string instead of bytes
-        hashed_password = bcrypt.generate_password_hash(form.password.data) 
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8') 
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
@@ -51,7 +51,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password.', 'danger')
-            return redirect(url_for('home'))
+            return redirect(url_for('login'))
     return render_template('login.html', title='Login', form=form)
 
 @app.route("/logout")
