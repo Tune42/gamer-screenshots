@@ -83,3 +83,9 @@ body {
     background-color: grey;
     color: white;
   }
+
+  .media .align-self-top img{
+    border-style: solid;
+    border-radius: 3px;
+    border-color: black;
+  }
