@@ -66,7 +66,11 @@
                   <p class='text-muted'>
                     <ul class="list-group">
                       <li class="list-group-item list-group-item-light"><a href="/post/new">Submit Screenshot</a></li>
-                      <li class="list-group-item list-group-item-light">View Screenshots</li>
+                      {% if current_user.is_authenticated %}
+                        <li class="list-group-item list-group-item-light"><a href="{{ url_for('view_posts', user_id=current_user.id) }}">View Submissions</a></li>
+                      {% else %}
+                        <li class="list-group-item list-group-item-light"><a href="{{ url_for('view_posts', user_id='-1') }}">View Submissions</a></li>
+                      {% endif %}
                       <li class="list-group-item list-group-item-light"><a href="{{ url_for('account') }}">View Profile</a></li>
                     </ul>
                   </p>

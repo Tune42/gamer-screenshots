@@ -137,3 +137,13 @@ def delete_post(post_id):
     flash('Post deleted successfully', 'success')
     return redirect(url_for('home'))
     
+@app.route("/users/<user_id>")
+@login_required
+def view_posts(user_id):
+    if user_id == '-1':
+        user_id = current_user.id
+    user = User.query.filter_by(id=user_id).first()
+    posts = Post.query.filter_by(user_id=user_id).all()
+    posts.reverse()
+    return render_template('view.html', posts=posts, title=user.username + "'s Posts")
+

@@ -84,6 +84,18 @@ body {
     color: white;
   }
 
+  .content-section .list-group a{
+    text-decoration: none;
+    text-underline-position: unset;
+    color: black;
+  }
+
+  .content-section .list-group a:hover{
+    text-decoration: none;
+    text-underline-position: unset;
+    color: white;
+  }
+
   .media .align-self-top img{
     border-style: solid;
     border-radius: 3px;
