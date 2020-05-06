@@ -9,7 +9,7 @@
                     <a class="mr-2" href="#">{{ users[post.user_id][0] }}</a>
                     <small class="text-muted">{{ post.date_posted }}</small>
                 </div>
-                <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+                <h2><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
                 <div class="article-content">
                     <p>{{ post.comments }}</p>
                     {% if 'imgur.com' in post.link %}
