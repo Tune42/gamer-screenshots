@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-        
+
         <!-- Title block -->
         {% if title %}
             <title>Gamer Screenshots - {{ title }}</title>
@@ -47,7 +47,7 @@
 
         <!-- Main Section -->
         <main role="main" class="container">
-            <div class="row">
+            <div class="row flex-column-reverse flex-md-row-reverse">
               <div class="col-md-8">
                 {% with messages = get_flashed_messages(with_categories=true) %}
                   {% if messages %}
