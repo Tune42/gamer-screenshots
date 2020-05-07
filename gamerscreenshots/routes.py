@@ -72,6 +72,15 @@ def save_picture(form_picture):
     i.save(picture_path)
     return picture_fn
 
+def save_screenshot(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/screenshots', picture_fn)
+    i = Image.open(form_picture)
+    i.save(picture_path)
+    return picture_fn
+
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
@@ -95,17 +104,18 @@ def account():
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, comments=form.comments.data, author=current_user, link=form.link.data)
+        picture_file = save_screenshot(form.picture.data)
+        post = Post(comments=form.comments.data, author=current_user, link="static/screenshots/" + picture_file)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
     return render_template('create_post.html', title='New Post', form=form, legend='New Post')
 
-@app.route("/post/<post_id>")
-def post(post_id):
-    post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post)
+# @app.route("/post/<post_id>")
+# def post(post_id):
+#     post = Post.query.get_or_404(post_id)
+#     return render_template('post.html', title=post.title, post=post)
 
 @app.route("/post/<post_id>/update", methods=["GET", "POST"])
 @login_required

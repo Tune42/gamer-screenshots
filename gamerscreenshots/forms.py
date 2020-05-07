@@ -47,7 +47,6 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('That email already has an account')
 
 class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
     comments = TextAreaField('Comments', validators=[DataRequired()])
-    link = StringField('Link', validators=[DataRequired(), URL()])
+    picture = FileField('Screenshot', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Post')
