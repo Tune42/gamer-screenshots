@@ -1,27 +1,25 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div class="content-section">
-    <h2 class="account-heading">Posts submitted by {{ posts[0].author.username }}</h2>
+    <h2 class="content-section account-heading">Posts submitted by {{ posts[0].author.username }}</h2>
     {%for post in posts%}  
-        <article class="media">
+        <article class="content-section media">
             <div class="media-body">
                 <div class="article-metadata">
-                    <small class="text-muted">{{ post.date_posted }}</small>
+                    <small class="text-muted">Posted on {{ post.date_posted }}</small>
+                </div>
+                <div class="article-content">
                     {% if post.author == current_user %}
                     <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
                         <button type="submit" class="btn btn-danger mt-1 mb-1" onClick='return confirmSubmit()'>Delete</button>
                     </form>
                     {% endif %}
-                </div>
-                <div class="article-content">
                     <p>{{ post.comments }} </p>
                     <a href="../{{ post.link }}"><img class="article-img" src="../{{ post.link }}" alt="Gamer Screenshot"></a>
                 </div>
             </div>
         </article>
     {% endfor %}
-    </div>
 {% endblock content %}
 {% block script %}
     <script LANGUAGE="JavaScript">
